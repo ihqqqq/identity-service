@@ -4,8 +4,6 @@ import com.ihqqq.identity_service.dto.request.ApiResponse;
 import com.ihqqq.identity_service.dto.request.UserCreationRequest;
 import com.ihqqq.identity_service.dto.request.UserUpdateRequest;
 import com.ihqqq.identity_service.dto.response.UserResponse;
-import com.ihqqq.identity_service.entity.User;
-import com.ihqqq.identity_service.exception.ErrorCode;
 import com.ihqqq.identity_service.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -50,6 +48,13 @@ public class UserController {
 
         return ApiResponse.<UserResponse>builder()
                 .result(userService.getUser(userId))
+                .build();
+    }
+
+    @GetMapping("/myInfo")
+     ApiResponse<UserResponse> getMyInfo() {
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.getMyInfo())
                 .build();
     }
 

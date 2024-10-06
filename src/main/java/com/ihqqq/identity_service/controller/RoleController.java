@@ -1,15 +1,17 @@
 package com.ihqqq.identity_service.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
+
 import com.ihqqq.identity_service.dto.request.ApiResponse;
 import com.ihqqq.identity_service.dto.request.RoleRequest;
 import com.ihqqq.identity_service.dto.response.RoleResponse;
 import com.ihqqq.identity_service.service.RoleService;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/roles")
@@ -23,7 +25,6 @@ public class RoleController {
         return ApiResponse.<RoleResponse>builder()
                 .result(roleService.create(request))
                 .build();
-
     }
 
     @GetMapping
@@ -38,5 +39,4 @@ public class RoleController {
         roleService.delete(role);
         return ApiResponse.<Void>builder().build();
     }
-
 }

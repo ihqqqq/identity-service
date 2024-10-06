@@ -1,15 +1,17 @@
 package com.ihqqq.identity_service.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
+
 import com.ihqqq.identity_service.dto.request.ApiResponse;
 import com.ihqqq.identity_service.dto.request.PermissionRequest;
 import com.ihqqq.identity_service.dto.response.PermissionResponse;
 import com.ihqqq.identity_service.service.PermissionService;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/permissions")
@@ -23,9 +25,7 @@ public class PermissionController {
         return ApiResponse.<PermissionResponse>builder()
                 .result(permissionService.create(request))
                 .build();
-
     }
-
 
     @GetMapping
     ApiResponse<List<PermissionResponse>> getAll() {
@@ -39,5 +39,4 @@ public class PermissionController {
         permissionService.delete(permission);
         return ApiResponse.<Void>builder().build();
     }
-
 }

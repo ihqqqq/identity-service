@@ -1,11 +1,7 @@
 package com.ihqqq.identity_service.dto.response;
 
-import com.ihqqq.identity_service.entity.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor

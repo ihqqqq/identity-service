@@ -1,10 +1,7 @@
 package com.ihqqq.identity_service.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.ihqqq.identity_service.dto.request.UserCreationRequest;
-import com.ihqqq.identity_service.dto.response.UserResponse;
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +17,12 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.ihqqq.identity_service.dto.request.UserCreationRequest;
+import com.ihqqq.identity_service.dto.response.UserResponse;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootTest
@@ -37,8 +39,6 @@ public class UserControllerIntegrationTest {
         registry.add("spring.datasource.password", MY_SQL_CONTAINER::getPassword);
         registry.add("spring.datasource.driverClassName", () -> "com.mysql.cj.jdbc.Driver");
         registry.add("spring.jpa.hibernate.ddl-auto", () -> "update");
-
-
     }
 
     @Autowired
@@ -84,13 +84,8 @@ public class UserControllerIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value(1000))
                 .andExpect(MockMvcResultMatchers.jsonPath("result.username").value("john"))
                 .andExpect(MockMvcResultMatchers.jsonPath("result.firstName").value("John"))
-                .andExpect(MockMvcResultMatchers.jsonPath("result.lastName").value("Doe")
-
-        );
-
+                .andExpect(MockMvcResultMatchers.jsonPath("result.lastName").value("Doe"));
 
         log.info("Result: {}", response.andReturn().getResponse().getContentAsString());
     }
-
-
 }

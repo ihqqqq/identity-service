@@ -12,9 +12,11 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -91,7 +93,26 @@ public class UserServiceTest {
 
         // THEN
         Assertions.assertThat(exception.getErrorCode().getCode()).isEqualTo(1002);
+    }
 
+    @Test
+    @WithMockUser(username = "john")
+    void getMyInfo_validRequest_success() {
+        Mockito.when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user));
 
+        var response = userService.getMyInfo();
+
+        Assertions.assertThat(response.getUsername()).isEqualTo("john");
+        Assertions.assertThat(response.getId()).isEqualTo("008f959efbeb");
+    }
+
+    @Test
+    @WithMockUser(username = "john")
+    void getMyInfo_userNotFound_error() {
+        Mockito.when(userRepository.findByUsername(anyString())).thenReturn(Optional.ofNullable(null));
+
+        var exception = assertThrows(AppException.class, () -> userService.getMyInfo());
+
+        Assertions.assertThat(exception.getErrorCode().getCode()).isEqualTo(1005);
     }
 }
